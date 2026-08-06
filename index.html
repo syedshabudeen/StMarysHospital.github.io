@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Mary's Hospital — Advanced Care For Every Generation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1B1B;
+    --navy:#122A54;
+    --navy-deep:#0B1D3D;
+    --maroon:#8C1D23;
+    --maroon-deep:#6E1319;
+    --gold:#B8922F;
+    --cream:#FAF6EF;
+    --paper:#FFFFFF;
+    --line:#E7E1D5;
+    --muted:#6B6459;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Manrope',sans-serif;color:var(--ink);background:var(--cream);line-height:1.65;}
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  img{max-width:100%;display:block;}
+  .skip-link{position:absolute;left:16px;top:-60px;z-index:500;background:#fff;color:var(--navy);padding:10px 14px;border-radius:0 0 6px 6px;font-weight:700;}
+  .skip-link:focus{top:0;}
+
+  .notice{background:var(--navy);color:#EDE9DD;font-size:13.5px;font-weight:600;padding:9px 0;text-align:center;}
+  .notice span{color:var(--gold);font-weight:700;margin-right:8px;}
+  .notice a{color:#fff;text-decoration:underline;text-underline-offset:3px;}
+
+  header{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);z-index:100;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--navy);}
+  .brand .mark{width:36px;height:36px;border-radius:8px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;}
+  .nav-links{display:flex;gap:30px;font-size:14.5px;font-weight:600;}
+  .nav-links a{position:relative;padding-bottom:4px;color:var(--ink);}
+  .nav-links a.active{color:var(--navy);}
+  .nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold);}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+  .btn{padding:11px 22px;border-radius:6px;font-size:14px;font-weight:700;display:inline-block;border:1px solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--maroon);color:#fff;}
+  .btn-primary:hover{background:var(--maroon-deep);}
+  .btn-ghost{border:1px solid var(--line);background:#fff;color:var(--navy);}
+  .menu-toggle{display:none;background:none;border:0;font-size:24px;cursor:pointer;}
+
+  .hero{position:relative;min-height:600px;display:flex;align-items:flex-end;overflow:hidden;background:var(--navy-deep);}
+  .hero-media{position:absolute;inset:0;z-index:0;}
+  .hero-media img, .hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+  .hero-media img{opacity:1;transition:opacity .6s ease;}
+  .hero-media video{opacity:0;transition:opacity .6s ease;}
+  .hero:hover .hero-media img{opacity:0;}
+  .hero:hover .hero-media video{opacity:1;}
+  .hero-scrim{position:absolute;inset:0;background:linear-gradient(0deg, rgba(11,29,61,0.94) 8%, rgba(11,29,61,0.62) 50%, rgba(11,29,61,0.30) 100%);z-index:1;}
+  .hero-inner{position:relative;z-index:2;padding:64px 0 72px;color:#fff;max-width:660px;}
+  .hero-hint{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:#EFE9DA;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);padding:6px 14px;border-radius:999px;margin-bottom:20px;}
+  .eyebrow{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:'';width:22px;height:2px;background:var(--gold);display:inline-block;}
+  .hero h1{font-size:48px;line-height:1.12;margin-bottom:18px;}
+  .hero p{color:#D9DEEA;font-size:16.5px;max-width:480px;margin-bottom:30px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-outline-light{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.35);}
+
+  .vitals{background:var(--navy);color:#fff;}
+  .vitals-inner{display:flex;justify-content:space-between;padding:22px 0;flex-wrap:wrap;gap:20px;}
+  .vital{flex:1;min-width:140px;border-left:1px solid rgba(255,255,255,0.15);padding-left:20px;}
+  .vital:first-child{border-left:none;padding-left:0;}
+  .vital .num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);}
+  .vital .lbl{font-size:12px;color:#C7CEE0;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px;}
+
+  section{padding:84px 0;}
+  .section-head{max-width:580px;margin-bottom:44px;}
+  .section-head h2{font-size:32px;}
+  .section-head p{color:var(--muted);margin-top:12px;}
+
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .service-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:28px;transition:box-shadow .2s ease;}
+  .service-card:hover{box-shadow:0 12px 28px rgba(18,42,84,0.08);}
+  .service-card .icon{width:42px;height:42px;border-radius:8px;background:var(--cream);color:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;margin-bottom:16px;}
+  .service-card h3{font-size:18px;margin-bottom:8px;}
+  .service-card p{color:var(--muted);font-size:14.5px;}
+
+  /* Booking section */
+  .booking{background:var(--paper);}
+  .booking-card{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:36px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field label{font-size:13px;font-weight:700;color:var(--navy);}
+  .field select, .field input{padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;font-family:'Manrope',sans-serif;font-size:14.5px;color:var(--ink);}
+  .field select:focus, .field input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  .field-full{grid-column:1 / -1;}
+  .doctor-preview{grid-column:1/-1;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--muted);}
+  .doctor-preview strong{color:var(--navy);}
+  .booking-actions{grid-column:1/-1;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .btn-whatsapp{background:#25D366;color:#fff;}
+  .btn-whatsapp:hover{background:#1EBE59;}
+  .booking-note{grid-column:1/-1;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;}
+  .consent{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);}
+  .consent input{margin-top:5px;accent-color:var(--maroon);}
+  .form-status{grid-column:1/-1;min-height:22px;font-size:13px;color:var(--maroon);font-weight:700;}
+
+  .doctors{background:var(--cream);}
+  .doctors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .doctor-card{background:var(--paper);border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+  .doctor-photo{height:180px;background:linear-gradient(160deg,#DCE2F0,#B9C3DD);}
+  .doctor-info{padding:18px;}
+  .doctor-info h3{font-size:16.5px;margin-bottom:2px;}
+  .doctor-info .spec{color:var(--maroon);font-size:13px;font-weight:700;margin-bottom:10px;display:block;}
+  .doctor-info ul{list-style:none;font-size:13px;color:var(--muted);margin-bottom:14px;}
+  .pill-btn{display:inline-block;background:#fff;border:1px solid var(--line);color:var(--navy);font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px;}
+
+  .contact-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:40px;align-items:start;}
+  .contact-list{display:flex;flex-direction:column;gap:20px;margin-top:24px;}
+  .contact-item{display:flex;gap:14px;align-items:flex-start;}
+  .contact-item .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:8px;flex-shrink:0;}
+  .contact-item h4{font-size:15px;margin-bottom:2px;}
+  .contact-item p, .contact-item a{color:var(--muted);font-size:14.5px;}
+  .map-frame{border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+  .map-frame iframe{width:100%;height:360px;border:0;display:block;}
+  .patient-info{background:var(--paper);}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .info-card{border:1px solid var(--line);border-radius:10px;padding:26px;background:var(--cream);}
+  .info-card h3{font-size:19px;color:var(--navy);margin-bottom:9px;}
+  .info-card p{font-size:14px;color:var(--muted);margin-bottom:14px;}
+  .info-card a{color:var(--maroon);font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+  .safety-strip{background:#F4ECE1;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;}
+  .safety-strip .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .safety-strip p{color:var(--muted);font-size:14px;}
+
+  footer{background:var(--navy-deep);color:#B7C0D9;padding:56px 0 28px;font-size:13.5px;}
+  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:22px;}
+  .footer-top .brand{color:#fff;margin-bottom:10px;}
+  .footer-cols{display:flex;gap:56px;flex-wrap:wrap;}
+  .footer-col h4{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;}
+  .footer-col a{display:block;color:#B7C0D9;padding:5px 0;}
+  .footer-col a:hover{color:var(--gold);}
+  .socials{display:flex;gap:10px;margin-top:14px;}
+  .socials a{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;}
+  .footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+
+  .chat-fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 8px 20px rgba(0,0,0,0.25);z-index:200;}
+
+  @media (max-width:860px){
+    .nav-links, .nav-cta .btn-ghost{display:none;}
+    .menu-toggle{display:block;}
+    .hero h1{font-size:32px;}
+    .services-grid, .doctors-grid, .info-grid{grid-template-columns:1fr 1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .booking-card{grid-template-columns:1fr;}
+    .footer-cols{gap:32px;}
+    .nav-links.is-open{display:flex;position:absolute;left:0;right:0;top:69px;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 24px;box-shadow:0 12px 20px rgba(18,42,84,.08);}
+    .nav-links.is-open a{padding:10px 0;}
+    .safety-strip .wrap{align-items:flex-start;flex-direction:column;}
+  }
+  @media (max-width:540px){
+    .wrap{padding:0 18px;}
+    .nav{padding:13px 18px;}
+    .brand{font-size:16px;gap:8px;}
+    .brand .mark{width:32px;height:32px;}
+    .hero{min-height:560px;}
+    .hero-inner{padding:52px 0;}
+    .hero-hint{display:none;}
+    .services-grid, .doctors-grid, .info-grid{grid-template-columns:1fr;}
+    section{padding:62px 0;}
+    .booking-card{padding:22px;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="notice"><span>Emergency support available 24/7</span>For urgent medical help, call <a href="tel:+911234567890">+91 12345 67890</a> or visit the Emergency Department.</div>
+
+<header>
+  <div class="nav">
+    <div class="brand"><span class="mark">+</span>St Mary's Hospital</div>
+    <nav class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#services">Departments</a>
+      <a href="#doctors">Doctors</a>
+      <a href="#book">Book appointment</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Staff login</a>
+      <a href="#book" class="btn btn-primary">Book appointment</a>
+    </div>
+    <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main id="main-content">
+<section class="hero">
+  <div class="hero-media">
+    <img src="assets/hospital-building.webp" alt="St Mary's Hospital building">
+    <!-- Slow zoom animation generated from the building photo. Swap for real walkthrough footage later if you get some filmed. -->
+    <video muted loop playsinline preload="auto">
+      <source src="assets/hospital-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">St Mary's Hospital</div>
+    <h1>Advanced care for every generation.</h1>
+    <p>Premium, patient-first medical care shaped by trusted doctors, advanced diagnostics, and calm clinical spaces built for urgent, preventive, and specialist treatment.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn btn-primary">Book appointment</a>
+      <a href="#contact" class="btn btn-outline-light">Visit us</a>
+    </div>
+  </div>
+</section>
+
+<div class="vitals">
+  <div class="wrap vitals-inner">
+    <div class="vital"><div class="num">250+</div><div class="lbl">Beds</div></div>
+    <div class="vital"><div class="num">60+</div><div class="lbl">Specialist doctors</div></div>
+    <div class="vital"><div class="num">18</div><div class="lbl">Departments</div></div>
+    <div class="vital"><div class="num">24/7</div><div class="lbl">Emergency care</div></div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What we treat</div>
+      <h2>Departments &amp; specialities</h2>
+      <p>From routine checkups to complex surgeries, our departments are equipped with modern diagnostic and treatment technology.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><div class="icon">C</div><h3>Cardiology</h3><p>Comprehensive heart care, from diagnostics to interventional cardiology.</p></div>
+      <div class="service-card"><div class="icon">O</div><h3>Orthopaedics</h3><p>Joint replacement, sports injury, and spine care under one roof.</p></div>
+      <div class="service-card"><div class="icon">N</div><h3>Neurology</h3><p>Advanced neuro-diagnostics and stroke management by specialists.</p></div>
+      <div class="service-card"><div class="icon">P</div><h3>Paediatrics</h3><p>Dedicated child care, from newborn to adolescent health.</p></div>
+      <div class="service-card"><div class="icon">G</div><h3>Gynaecology</h3><p>Maternity, prenatal, and women's health services.</p></div>
+      <div class="service-card"><div class="icon">E</div><h3>Emergency &amp; trauma</h3><p>Round-the-clock emergency response with a dedicated trauma unit.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="booking">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Book in under a minute</div>
+      <h2>Appointment booking</h2>
+      <p>Pick a department, choose your doctor, and confirm — your booking request is sent straight to our reception on WhatsApp.</p>
+    </div>
+    <div class="booking-card">
+      <div class="field">
+        <label for="book-dept">Department</label>
+        <select id="book-dept">
+          <option value="">Select department</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="book-doctor">Doctor</label>
+        <select id="book-doctor" disabled>
+          <option value="">Select department first</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="book-date">Preferred date</label>
+        <input type="date" id="book-date">
+      </div>
+      <div class="field">
+        <label for="book-time">Preferred time</label>
+        <select id="book-time">
+          <option value="">Select time slot</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="book-name">Patient name</label>
+        <input type="text" id="book-name" placeholder="Full name">
+      </div>
+      <div class="field">
+        <label for="book-phone">Phone number</label>
+        <input type="tel" id="book-phone" placeholder="10-digit mobile number">
+      </div>
+      <div class="doctor-preview" id="doctor-preview">Select a department and doctor to see their available hours here.</div>
+      <div class="booking-actions">
+        <button class="btn btn-whatsapp" id="book-whatsapp-btn" type="button">Send booking request on WhatsApp</button>
+        <span style="font-size:13px;color:var(--muted);">A request is not an appointment confirmation.</span>
+      </div>
+      <label class="consent" for="booking-consent"><input type="checkbox" id="booking-consent"> <span>I consent to St Mary's Hospital using these details only to respond to this appointment request. Please do not include symptoms, reports, or other sensitive medical information in WhatsApp.</span></label>
+      <p class="form-status" id="form-status" aria-live="polite"></p>
+      <div class="booking-note">
+        This form sends the request as a pre-filled WhatsApp message to the hospital's front desk number — no backend required.
+        If St Mary's Hospital has its own patient management or HIS/EMR system with an API, the same form data can post there instead
+        (or in addition), so bookings land directly in your appointment system rather than a phone inbox. That's a short integration
+        once you share the API's endpoint and auth details — see the commented function in this page's script for where it plugs in.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="doctors" class="doctors">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Meet the team</div>
+      <h2>Our specialists</h2>
+    </div>
+    <div class="doctors-grid">
+      <div class="doctor-card">
+        <div class="doctor-photo"></div>
+        <div class="doctor-info">
+          <h3>Dr. A. Sharma</h3>
+          <span class="spec">Cardiologist</span>
+          <ul><li>Specialist consultant</li><li>10:00 – 14:00</li><li>Cardiology</li></ul>
+          <a href="#book" class="pill-btn">Book with doctor</a>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo"></div>
+        <div class="doctor-info">
+          <h3>Dr. R. Iyer</h3>
+          <span class="spec">Orthopaedic surgeon</span>
+          <ul><li>Specialist consultant</li><li>10:00 – 14:00</li><li>Orthopaedics</li></ul>
+          <a href="#book" class="pill-btn">Book with doctor</a>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo"></div>
+        <div class="doctor-info">
+          <h3>Dr. M. Fernandes</h3>
+          <span class="spec">Neurologist</span>
+          <ul><li>Specialist consultant</li><li>17:00 – 20:00</li><li>Neurology</li></ul>
+          <a href="#book" class="pill-btn">Book with doctor</a>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo"></div>
+        <div class="doctor-info">
+          <h3>Dr. Z. Thasleem</h3>
+          <span class="spec">Obstetrician &amp; gynaecologist</span>
+          <ul><li>Specialist consultant</li><li>17:00 – 20:00</li><li>Gynaecology</li></ul>
+          <a href="#book" class="pill-btn">Book with doctor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow">Find us</div>
+      <h2>Visit or reach out</h2>
+      <div class="contact-list">
+        <div class="contact-item"><span class="dot"></span><div><h4>Address</h4><p>Update with St Mary's Hospital's exact address</p></div></div>
+        <div class="contact-item"><span class="dot"></span><div><h4>Phone</h4><a href="tel:+911234567890">+91 12345 67890</a></div></div>
+        <div class="contact-item"><span class="dot"></span><div><h4>Email</h4><a href="mailto:care@stmaryshospital.example">care@stmaryshospital.example</a></div></div>
+        <div class="contact-item"><span class="dot"></span><div><h4>Hours</h4><p>OPD: 8:00 AM – 8:00 PM · Emergency: 24/7</p></div></div>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4123.276311363807!2d78.21617067526545!3d12.512799524770719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bac349185d33abd%3A0xec60660020ecc08f!2sSt%20Marys%20Hospital!5e1!3m2!1sen!2sin!4v1786001494659!5m2!1sen!2sin"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section id="patient-information" class="patient-info">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">For patients &amp; families</div>
+      <h2>Clear information and support</h2>
+      <p>These links make key patient-support information easy to find. Hospital administration should keep the contact details and policy documents current.</p>
+    </div>
+    <div class="info-grid">
+      <article class="info-card"><h3>Patient rights &amp; responsibilities</h3><p>Understand your right to respectful, safe, informed care, privacy, and participation in care decisions.</p><a href="#contact">Request patient information</a></article>
+      <article class="info-card"><h3>Feedback &amp; grievances</h3><p>Share a compliment, concern, or complaint. We acknowledge concerns and route them to the appropriate hospital team.</p><a href="mailto:care@stmaryshospital.example?subject=Patient%20feedback%20or%20grievance">Send feedback or a grievance</a></article>
+      <article class="info-card"><h3>Privacy &amp; medical records</h3><p>Ask how your health information is used, protected, or how to request access to your medical records.</p><a href="mailto:care@stmaryshospital.example?subject=Medical%20records%20or%20privacy%20request">Contact medical records</a></article>
+    </div>
+  </div>
+</section>
+
+<aside class="safety-strip" aria-label="Patient safety notice">
+  <div class="wrap"><div><strong>Patient safety is everyone’s responsibility.</strong><p>Keep your identification band on, tell your care team about allergies and medicines, and ask if something is unclear.</p></div><a href="#contact" class="btn btn-ghost">Contact patient support</a></div>
+</aside>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand"><span class="mark">+</span>St Mary's Hospital</div>
+        <p style="max-width:280px;color:#8D96B3;">Multi-specialty hospital delivering trusted, patient-first care.</p>
+        <div class="socials"><a href="#">in</a><a href="#">f</a><a href="#">x</a></div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Navigate</h4><a href="#main-content">Home</a><a href="#services">Departments</a><a href="#doctors">Doctors</a><a href="#book">Book appointment</a></div>
+        <div class="footer-col"><h4>Patient support</h4><a href="#patient-information">Patient rights</a><a href="#patient-information">Feedback &amp; grievances</a><a href="#patient-information">Privacy &amp; medical records</a><a href="tel:+911234567890">Emergency: +91 12345 67890</a></div>
+      </div>
+    </div>
+    <div class="footer-inner">
+      <div>&copy; 2026 St Mary's Hospital. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/911234567890" target="_blank" class="chat-fab" aria-label="Chat on WhatsApp">&#9743;</a>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  const hero = document.querySelector('.hero');
+  const video = hero.querySelector('video');
+  hero.addEventListener('mouseenter', () => video.play().catch(()=>{}));
+  hero.addEventListener('mouseleave', () => video.pause());
+
+  /* ---- Doctor-based appointment booking ---- */
+  const HOSPITAL_WHATSAPP_NUMBER = "911234567890"; // replace with the hospital's real WhatsApp number, country code first, no plus or spaces
+
+  const doctorsByDept = {
+    "Cardiology": [{ name: "Dr. A. Sharma", hours: "10:00 – 14:00" }],
+    "Orthopaedics": [{ name: "Dr. R. Iyer", hours: "10:00 – 14:00" }],
+    "Neurology": [{ name: "Dr. M. Fernandes", hours: "17:00 – 20:00" }],
+    "Paediatrics": [{ name: "Dr. S. Reddy", hours: "17:00 – 20:00" }],
+    "Gynaecology": [{ name: "Dr. Z. Thasleem", hours: "17:00 – 20:00" }]
+  };
+  const timeSlots = ["09:00 AM","10:00 AM","11:00 AM","12:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM"];
+
+  const deptSelect = document.getElementById('book-dept');
+  const doctorSelect = document.getElementById('book-doctor');
+  const timeSelect = document.getElementById('book-time');
+  const preview = document.getElementById('doctor-preview');
+
+  Object.keys(doctorsByDept).forEach(dept => {
+    const opt = document.createElement('option');
+    opt.value = dept; opt.textContent = dept;
+    deptSelect.appendChild(opt);
+  });
+  timeSlots.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t; opt.textContent = t;
+    timeSelect.appendChild(opt);
+  });
+
+  deptSelect.addEventListener('change', () => {
+    const dept = deptSelect.value;
+    doctorSelect.innerHTML = '';
+    if (!dept) {
+      doctorSelect.disabled = true;
+      doctorSelect.innerHTML = '<option value="">Select department first</option>';
+      preview.textContent = 'Select a department and doctor to see their available hours here.';
+      return;
+    }
+    doctorSelect.disabled = false;
+    const opt0 = document.createElement('option');
+    opt0.value = ''; opt0.textContent = 'Select doctor';
+    doctorSelect.appendChild(opt0);
+    doctorsByDept[dept].forEach(doc => {
+      const opt = document.createElement('option');
+      opt.value = doc.name; opt.dataset.hours = doc.hours;
+      opt.textContent = doc.name + ' — ' + doc.hours;
+      doctorSelect.appendChild(opt);
+    });
+  });
+
+  doctorSelect.addEventListener('change', () => {
+    const selected = doctorSelect.options[doctorSelect.selectedIndex];
+    if (selected && selected.value) {
+      preview.innerHTML = '<strong>' + selected.value + '</strong> is available ' + selected.dataset.hours + '.';
+    } else {
+      preview.textContent = 'Select a department and doctor to see their available hours here.';
+    }
+  });
+
+  document.getElementById('book-whatsapp-btn').addEventListener('click', () => {
+    const dept = deptSelect.value;
+    const doctor = doctorSelect.value;
+    const date = document.getElementById('book-date').value;
+    const time = timeSelect.value;
+    const name = document.getElementById('book-name').value.trim();
+    const phone = document.getElementById('book-phone').value.trim();
+    const consent = document.getElementById('booking-consent').checked;
+    const status = document.getElementById('form-status');
+
+    if (!dept || !doctor || !date || !time || !name || !phone) {
+      status.textContent = 'Please fill in every required field before sending your booking request.';
+      return;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      status.textContent = 'Enter a valid 10-digit mobile number.';
+      return;
+    }
+    if (!consent) {
+      status.textContent = 'Please confirm your consent before sending this request.';
+      return;
+    }
+    status.textContent = '';
+
+    const message =
+      "New appointment request:\n" +
+      "Patient: " + name + "\n" +
+      "Phone: " + phone + "\n" +
+      "Department: " + dept + "\n" +
+      "Doctor: " + doctor + "\n" +
+      "Preferred date: " + date + "\n" +
+      "Preferred time: " + time;
+
+    window.open("https://wa.me/" + HOSPITAL_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank");
+
+    /*
+      To send this straight into the hospital's own patient management / HIS / EMR system instead of (or alongside)
+      WhatsApp, replace or extend this handler with a call to their booking API, e.g.:
+
+      fetch("https://<hospital-system-domain>/api/appointments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer <token>" },
+        body: JSON.stringify({ patientName: name, phone, department: dept, doctor, date, time })
+      });
+
+      The exact endpoint, auth method, and field names depend on which system St Mary's Hospital runs
+      (e.g. a custom REST API, or an HL7/FHIR-compliant EMR) — plug those details in once you have them.
+    */
+  });
+</script>
+
+</body>
+</html>
